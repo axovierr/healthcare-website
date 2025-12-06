@@ -1,0 +1,64 @@
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex items-center justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Rekam Medis') }}
+            </h2>
+            <a href="{{ route('doctor.dashboard') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                ← Kembali ke Dashboard
+            </a>
+        </div>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6">
+                    <p class="text-gray-600 mb-6">Buat dan kelola rekam medis pasien</p>
+
+                    @if($medicalRecords->count() > 0)
+                        <div class="space-y-4">
+                            @foreach($medicalRecords as $record)
+                                <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h4 class="font-semibold text-gray-900">{{ $record->appointment->patient->user->name ?? '-' }}</h4>
+                                            <p class="text-sm text-gray-600">{{ $record->visit_date->format('d M Y') }}</p>
+                                            <div class="mt-2">
+                                                <p class="text-sm"><strong>Diagnosis:</strong> {{ $record->diagnosis ?? '-' }}</p>
+                                                <p class="text-sm"><strong>Keluhan:</strong> {{ $record->appointment->complaint ?? '-' }}</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="{{ route('medical-records.show', $record->id) }}" class="inline-flex items-center px-3 py-1 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                Lihat Detail
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <div class="mt-4">
+                            {{ $medicalRecords->links() }}
+                        </div>
+                    @else
+                        <div class="text-center py-12 text-gray-500">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <p class="mt-2">Belum ada rekam medis</p>
+                            <p class="text-sm">Rekam medis yang Anda buat akan muncul di sini.</p>
+                        </div>
+                    @endif
+
+                    <div class="mt-6">
+                        <a href="{{ route('doctor.dashboard') }}" class="text-indigo-600 hover:text-indigo-900">
+                            ← Kembali ke Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
