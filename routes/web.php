@@ -131,8 +131,9 @@ Route::middleware(['auth', 'role:patient'])->prefix('patient')->group(function (
     });
 });
 
-// GRUP PASIEN 3 (STRUKTUR ASLI)
-Route::middleware(['auth', 'role:patient', 'patient.profile'])->prefix('patient')->group(function () {
+// GRUP PASIEN 3 (YANG TELAH DIPERBAIKI)
+// Menghapus 'patient.profile' dari middleware karena itu nama route, bukan middleware
+Route::middleware(['auth', 'role:patient'])->prefix('patient')->group(function () {
     Route::get('/dashboard', function () {
         return view('patient.dashboard');
     })->name('patient.dashboard');

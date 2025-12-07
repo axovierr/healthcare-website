@@ -4,78 +4,88 @@ namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
-use App\Models\Notification; // <--- PENTING: Tambahkan Import Model Notification
+use App\Models\Notification; // <--- PENTING: Model Notification wajib di-import
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
+    /**
+     * Menampilkan daftar janji temu hari ini.
+     */
     public function today()
     {
-        // Ambil ID User yang sedang login sebagai dokter
         $doctorId = Auth::id();
 
-        // Get appointments for today
-        // Kita asumsikan 'payment_status' ada di tabel appointments.
-        // Jika tidak ada, hapus bagian ->where('payment_status'...)
         $appointments = Appointment::where('doctor_id', $doctorId)
             ->whereDate('date', today())
             ->where(function($q) {
+                // Filter status pembayaran atau jadwal (sesuaikan dengan logic app kamu)
                 $q->where('payment_status', 'paid')
                   ->orWhereNotNull('schedule_id');
             })
-            // Pastikan relasi 'patient' di model Appointment sudah benar (belongsTo User)
-            ->with(['patient', 'schedule']) 
+            ->with(['patient', 'schedule']) // Pastikan relasi patient ada di model Appointment
             ->orderBy('start_time')
             ->get();
 
         return view('doctor.appointments.today', compact('appointments'));
     }
 
-    public function start(Appointment $appointment)
+    /**
+     * Memulai sesi konsultasi & Mengirim Notifikasi ke Pasien.
+     */
+    public function start(Request $request, Appointment $appointment)
     {
-        $doctorId = Auth::id();
-
-        // Verify this appointment belongs to this doctor
-        if ($appointment->doctor_id !== $doctorId) {
+        // 1. Validasi: Pastikan appointment ini milik dokter yang sedang login
+        if ($appointment->doctor_id !== Auth::id()) {
             abort(403, 'Unauthorized action. Ini bukan pasien Anda.');
         }
 
-        // Check if appointment is paid
-        if ($appointment->payment_status !== 'paid') {
-            return redirect()->back()->with('error', 'Pasien belum melakukan pembayaran.');
-        }
+        // 2. Update Status Appointment
+        // Pastikan kolom 'status' ada di tabel appointments kamu (enum: pending, processing, completed, cancelled)
+        $appointment->update([
+            'status' => 'processing'
+        ]);
 
-        return view('doctor.appointments.consultation', compact('appointment'));
+        // 3. Sistem Kirim Notifikasi ke Pasien
+        Notification::create([
+            'user_id' => $appointment->patient_id, // Mengirim ke ID Pasien
+            'title'   => 'Pemeriksaan Dimulai',
+            'message' => 'Dokter ' . Auth::user()->name . ' telah memulai sesi konsultasi Anda. Mohon bersiap.',
+            'type'    => 'info',
+            'is_read' => false,
+        ]);
+
+        // 4. Redirect kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Status diperbarui menjadi Processing. Notifikasi dikirim ke pasien.');
     }
 
     /**
-     * Fitur Baru: Kirim Link Zoom ke Notifikasi Pasien
+     * Fitur Tambahan: Kirim Link Zoom/Meet Manual ke Notifikasi Pasien
      */
     public function sendZoomLink(Request $request, Appointment $appointment)
     {
         // 1. Validasi Input
         $request->validate([
             'zoom_link' => 'required|url',
-            'message' => 'nullable|string',
+            'message'   => 'nullable|string',
         ]);
 
-        // 2. Pastikan dokter yang mengirim adalah dokter yang menangani appointment ini
+        // 2. Validasi Kepemilikan
         if ($appointment->doctor_id !== Auth::id()) {
             abort(403, 'Unauthorized action');
         }
 
-        // 3. Simpan ke Tabel Notifications Manual
+        // 3. Simpan ke Tabel Notifications
         Notification::create([
-            'patient_id' => $appointment->patient_id, // ID Pasien target
-            'doctor_id'  => Auth::id(),               // ID Dokter pengirim
-            'title'      => 'Link Telemedicine Masuk',
-            // Kita gabungkan pesan dokter dan linknya agar muncul rapi di notifikasi pasien
-            'message'    => ($request->message ?? 'Silakan bergabung untuk konsultasi.') . ' Link: ' . $request->zoom_link,
-            'is_read'    => false, // Default belum dibaca
+            'user_id' => $appointment->patient_id, // ID Pasien target
+            'title'   => 'Link Telemedicine Masuk',
+            'message' => ($request->message ?? 'Silakan bergabung untuk konsultasi.') . ' Link: ' . $request->zoom_link,
+            'type'    => 'action', // Tipe notifikasi (bisa disesuaikan)
+            'is_read' => false,
         ]);
 
-        // 4. (Opsional) Update status appointment jadi 'Ongoing' atau simpan link di tabel appointment
+        // Opsional: Simpan link ke tabel appointment juga jika perlu
         // $appointment->update(['meet_link' => $request->zoom_link]); 
 
         return back()->with('success', 'Link Zoom berhasil dikirim ke notifikasi pasien!');

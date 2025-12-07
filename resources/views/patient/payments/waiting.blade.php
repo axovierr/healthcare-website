@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.patient-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Menunggu Pembayaran') }}
@@ -199,4 +199,4 @@
                 });
         }, 10000);
     </script>
-</x-app-layout>
+</x-layouts.patient-layout>

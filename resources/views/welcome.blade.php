@@ -256,9 +256,9 @@
                 <nav class="grid grid-cols-2 gap-6 text-sm text-gray-700">
                     <div class="space-y-3">
                         <p class="font-semibold text-custom-black">Layanan Kami</p>
-                        <a href="{{ url('/cari-dokter') }}" class="block hover:text-custom-green transition">Cari Dokter</a>
-                        <a href="{{ url('/buat-janji') }}" class="block hover:text-custom-green transition">Buat Janji Temu</a>
-                        <a href="{{ url('/rekam-medis') }}" class="block hover:text-custom-green transition">Lihat Rekam Medis</a>
+                        <a href="#" class="block hover:text-custom-green transition">Cari Dokter</a>
+                        <a href="#" class="block hover:text-custom-green transition">Buat Janji Temu</a>
+                        <a href="#" class="block hover:text-custom-green transition">Lihat Rekam Medis</a>
                     </div>
                     <div class="space-y-3">
                         <p class="font-semibold text-custom-black">Bantuan & Info</p>
