@@ -9,32 +9,25 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
+                    <p class="text-gray-600 mb-6">Akses riwayat kesehatan dan rekam medis Anda dari setiap konsultasi</p>
+
                     @if($medicalRecords->count() > 0)
                         <div class="space-y-4">
                             @foreach($medicalRecords as $record)
-                                <div class="border rounded-lg p-6 hover:shadow-md transition-shadow">
-                                    <div class="flex justify-between items-start mb-4">
+                                <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    <div class="flex justify-between items-start">
                                         <div>
-                                            <h3 class="text-lg font-semibold text-gray-900">
-                                                {{ $record->visit_date->format('d M Y') }}
-                                            </h3>
-                                            <p class="text-sm text-gray-500">
-                                                Dokter: {{ $record->appointment->doctor->user->name ?? '-' }}
-                                            </p>
-                                        </div>
-                                        <a href="{{ route('medical-records.show', $record->id) }}" class="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700">
-                                            Lihat Detail
-                                        </a>
-                                    </div>
-
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                        <div>
-                                            <h4 class="text-sm font-semibold text-gray-700 mb-1">Diagnosis</h4>
-                                            <p class="text-gray-900">{{ $record->diagnosis ?? '-' }}</p>
+                                            <h4 class="font-semibold text-gray-900">{{ $record->appointment->patient->user->name ?? ($record->appointment->patient->user->name ?? '-') }}</h4>
+                                            <p class="text-sm text-gray-600">{{ $record->visit_date->format('d M Y') }}</p>
+                                            <div class="mt-2">
+                                                <p class="text-sm"><strong>Diagnosis:</strong> {{ $record->diagnosis ?? '-' }}</p>
+                                                <p class="text-sm"><strong>Keluhan:</strong> {{ $record->appointment->complaint ?? '-' }}</p>
+                                            </div>
                                         </div>
                                         <div>
-                                            <h4 class="text-sm font-semibold text-gray-700 mb-1">Keluhan</h4>
-                                            <p class="text-gray-900">{{ $record->appointment->complaint ?? '-' }}</p>
+                                            <a href="{{ route('medical-records.show', $record->id) }}" class="inline-flex items-center px-3 py-1 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                                                Lihat Detail
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -42,7 +35,7 @@
                         </div>
 
                         <!-- Pagination -->
-                        <div class="mt-6">
+                        <div class="mt-4">
                             {{ $medicalRecords->links() }}
                         </div>
                     @else
@@ -53,7 +46,7 @@
                             <h3 class="mt-2 text-sm font-medium text-gray-900">Belum Ada Rekam Medis</h3>
                             <p class="mt-1 text-sm text-gray-500">Rekam medis akan muncul setelah Anda melakukan konsultasi dengan dokter.</p>
                             <div class="mt-6">
-                                <a href="{{ route('patient.appointments.create') }}" class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                                <a href="{{ route('patient.appointments.create') }}" class="inline-flex items-center px-3 py-1 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                                     + Buat Janji Temu
                                 </a>
                             </div>

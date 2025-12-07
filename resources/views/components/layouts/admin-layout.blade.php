@@ -56,8 +56,20 @@
             }
             
             /* Button Styling */
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                padding: 0.75rem 1.5rem;
+                border-radius: 8px;
+                font-weight: 600;
+                font-size: 0.95rem;
+                border: none;
+                cursor: pointer;
+                text-decoration: none;
+            }
             .btn-primary {
                 background: linear-gradient(135deg, #00A878 0%, #008B6B 100%);
+                color: white;
                 transition: all 0.3s ease;
             }
             .btn-primary:hover {

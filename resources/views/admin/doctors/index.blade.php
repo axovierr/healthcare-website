@@ -1,6 +1,6 @@
 <x-layouts.admin-layout>
     <div class="mb-6">
-        <h1 class="heading-2 mb-2">Daftar Dokter</h1>
+        <h1 class="text-2xl font-bold mb-2 text-gray-800">Daftar Dokter</h1>
         <p class="text-gray-600">Kelola informasi dokter dan jadwal konsultasi</p>
     </div>
 

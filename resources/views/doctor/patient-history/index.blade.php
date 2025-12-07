@@ -50,12 +50,6 @@
                             <p class="text-sm">Riwayat pasien yang sudah selesai akan muncul di sini.</p>
                         </div>
                     @endif
-
-                    <div class="mt-6">
-                        <a href="{{ route('doctor.dashboard') }}" class="text-indigo-600 hover:text-indigo-900">
-                            ← Kembali ke Dashboard
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>

@@ -42,7 +42,7 @@
                     Akses catatan dokter, resep, dan riwayat tindakan kapanpun diperlukan.
                 </p>
                 <a href="{{ route('patient.medical-records.index') }}"
-                   class="inline-flex items-center justify-center px-4 py-2 mt-auto rounded-lg border border-custom-green text-custom-green font-semibold hover:bg-custom-green hover:text-white transition">
+                   class="inline-flex items-center justify-center px-4 py-2 mt-auto rounded-lg border border-custom-green text-custom-green font-semibold hover:bg-custom-green transition">
                     Buka Rekam Medis
                 </a>
             </div>

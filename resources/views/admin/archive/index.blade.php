@@ -1,6 +1,6 @@
 <x-layouts.admin-layout>
     <div class="mb-6">
-        <h1 class="heading-2 mb-2">Arsip Rekam Medis & Resep</h1>
+        <h1 class="text-2xl font-bold mb-2 text-gray-800">Arsip Rekam Medis & Resep</h1>
         <p class="text-gray-600">Lihat semua riwayat rekam medis dan resep dokter</p>
     </div>
 

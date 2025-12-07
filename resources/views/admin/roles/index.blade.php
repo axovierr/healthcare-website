@@ -1,6 +1,6 @@
 <x-layouts.admin-layout>
     <div class="mb-6">
-        <h1 class="heading-2 mb-2">Manajemen Role Pengguna</h1>
+        <h1 class="text-2xl font-bold mb-2 text-gray-800">Manajemen Role Pengguna</h1>
         <p class="text-gray-600">Kelola peran dan izin pengguna sistem</p>
     </div>
 
@@ -14,9 +14,9 @@
     @endif
 
     <div class="card p-6">
-        <div class="flex justify-between items-center mb-6 section-header">
+        <div class="flex justify-between items-center mb-6">
             <h3 class="heading-4">Daftar Role</h3>
-            <a href="{{ route('admin.user-roles.create') }}" class="btn btn-primary">
+            <a href="{{ route('admin.user-roles.create') }}" class="btn btn-primary gap-2">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                 </svg>

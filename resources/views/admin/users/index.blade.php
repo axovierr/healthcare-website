@@ -1,6 +1,6 @@
 <x-layouts.admin-layout>
     <div class="mb-6">
-        <h1 class="heading-2 mb-2">Manajemen Akun Pengguna</h1>
+        <h1 class="text-2xl font-bold mb-2 text-gray-800">Manajemen Akun Pengguna</h1>
         <p class="text-gray-600">Kelola semua akun pengguna sistem kesehatan</p>
     </div>
 
@@ -16,7 +16,7 @@
     <div class="card p-6 mb-6">
         <div class="flex justify-between items-center mb-6">
             <h2 class="heading-4">Daftar Pengguna</h2>
-            <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
+            <a href="{{ route('admin.users.create') }}" class="btn btn-primary gap-2">
                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                 </svg>
