@@ -4,10 +4,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\ArchiveController;
 use App\Http\Controllers\Patient\PaymentController as PatientPaymentController;
 use App\Http\Controllers\Patient\ProfileController as PatientProfileController; 
 use App\Http\Controllers\PaymentWebhookController;
-use App\Http\Controllers\Admin\AdminDashboardController;
 // Tambahkan Import Controller Notifikasi agar lebih aman
 use App\Http\Controllers\Patient\NotificationController; 
 use Illuminate\Support\Facades\Route;
@@ -210,6 +212,8 @@ Route::middleware(['auth', 'role:doctor'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     // Ganti DashboardController dengan AdminDashboardController
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard'); 
+    Route::get('/admin/transactions', [TransactionController::class, 'index'])->name('admin.transactions.index');
+    Route::get('/admin/archive', [ArchiveController::class, 'index'])->name('admin.archive.index');
 });
 
 require __DIR__.'/auth.php';
