@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Patient\PaymentController as PatientPaymentController;
 use App\Http\Controllers\Patient\ProfileController as PatientProfileController; 
 use App\Http\Controllers\PaymentWebhookController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 // Tambahkan Import Controller Notifikasi agar lebih aman
 use App\Http\Controllers\Patient\NotificationController; 
 use Illuminate\Support\Facades\Route;
@@ -203,6 +204,11 @@ Route::middleware(['auth', 'role:doctor'])->group(function () {
     // Edit Medical Record
     Route::get('/medical-records/{medicalRecord}/edit', [MedicalRecordController::class, 'edit'])->name('medical-records.edit');
     Route::put('/medical-records/{medicalRecord}', [MedicalRecordController::class, 'update'])->name('medical-records.update');
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    // Ganti DashboardController dengan AdminDashboardController
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard'); 
 });
 
 require __DIR__.'/auth.php';
