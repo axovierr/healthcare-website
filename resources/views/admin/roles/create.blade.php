@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.admin-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Tambah Role Baru') }}
@@ -66,7 +66,7 @@
                             <a href="{{ route('admin.user-roles.index') }}" class="mr-3 text-sm text-gray-600 hover:text-gray-900">
                                 Batal
                             </a>
-                            <button type="submit" class="px-4 py-2 bg-indigo-600 text-black font-semibold rounded-lg hover:bg-indigo-700">
+                            <button type="submit" class="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700">
                                 Simpan Role
                             </button>
                         </div>
@@ -75,4 +75,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-layouts.admin-layout>
